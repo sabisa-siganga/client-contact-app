@@ -5,7 +5,6 @@ interface ClientAttributes {
   id: number;
   name: string;
   clientCode: string;
-  email: string;
   createdAt: Date;
 }
 
@@ -28,11 +27,6 @@ const Client: ModelDefined<ClientAttributes, ClientCreationAttributes> =
       name: {
         type: DataTypes.STRING(50),
         allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-        unique: true,
       },
       createdAt: {
         type: DataTypes.DATE,

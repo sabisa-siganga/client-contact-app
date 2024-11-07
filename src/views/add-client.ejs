@@ -17,49 +17,121 @@
 
     <!-- Main Content -->
     <div class="container client-form-container">
-      <h2 class="text-center mb-4">Add New Client</h2>
-      <!-- Response message -->
-      <div id="responseMessage" class="mt-3"></div>
-      <form id="addClientForm">
-        <div class="mb-3">
-          <label for="name" class="form-label">Client Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            required
-            placeholder="Enter client name"
-          />
-        </div>
+      <h2 class="text-center mb-5">Add New Client</h2>
 
-        <div class="mb-3">
-          <label for="email" class="form-label">Email Address</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            required
-            placeholder="Enter email address"
-          />
-        </div>
+      <div class="tabs-container">
+        <!-- Response message -->
+        <%- include('partials/alert') %>
 
-        <div class="mb-3">
-          <label for="phone" class="form-label">Phone Number</label>
-          <input
-            type="text"
-            class="form-control"
-            id="phone"
-            name="phone"
-            placeholder="Enter phone number"
-          />
-        </div>
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-tabs" id="clientTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link active"
+              id="general-tab"
+              data-bs-toggle="tab"
+              href="#general"
+              role="tab"
+              aria-controls="general"
+              aria-selected="true"
+              >General</a
+            >
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              id="contacts-tab"
+              data-bs-toggle="tab"
+              href="#contacts"
+              role="tab"
+              aria-controls="contacts"
+              aria-selected="false"
+              >Contacts</a
+            >
+          </li>
+        </ul>
 
-        <button type="submit" class="btn btn-submit btn-primary">
-          Save Client
-        </button>
-      </form>
+        <!-- Tabs Content -->
+        <div class="tab-content" id="clientTabContent">
+          <!-- General Tab -->
+          <div
+            class="tab-pane fade show active"
+            id="general"
+            role="tabpanel"
+            aria-labelledby="general-tab"
+          >
+            <div class="form-container">
+              <form id="addClientForm">
+                <div class="mb-3 text-start">
+                  <label for="name" class="form-label">Client Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    required
+                    placeholder="Enter client name"
+                  />
+                </div>
+
+                <div class="mb-4">
+                  <label for="client-code" class="form-label"
+                    >Client Code</label
+                  >
+                  <input
+                    type="text"
+                    id="client-code"
+                    class="form-control"
+                    readonly
+                    placeholder="This is auto generated"
+                  />
+                </div>
+
+                <button type="submit" class="btn btn-submit btn-primary">
+                  Save Client
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Contacts Tab -->
+
+          <div
+            class="tab-pane fade"
+            id="contacts"
+            role="tabpanel"
+            aria-labelledby="contacts-tab"
+          >
+            <% if(contacts.length === 0){%>
+            <div class="no-records">No contact(s) found</div>
+            <% } %> <% if(contacts.length > 0){%>
+            <div>
+              <h3>Contact List</h3>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Contact Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Associated Client</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% contacts.forEach(contact => { %>
+                  <tr>
+                    <td><%= contact.name %></td>
+                    <td><%= contact.email %></td>
+                    <td><%= contact.phone %></td>
+                    <td><%= contact.clientName %></td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
     </div>
 
     <!-- Bootstrap JS -->

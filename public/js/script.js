@@ -8,8 +8,6 @@ function addClient() {
     // Collect form data
     const formData = {
       name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      phone: document.getElementById("phone").value,
     };
 
     try {
@@ -25,8 +23,9 @@ function addClient() {
       // Check if the response is ok (status 200-299)
       if (response.ok) {
         const result = await response.json();
-        responseMessage.innerHTML = `<div class="alert alert-success">Client added successfully!</div>`;
-        form.reset(); // Reset the form fields
+        responseMessage.innerHTML = `<div class="alert alert-success">${response.result}</div>`;
+
+        window.location.href = "./";
       } else {
         const error = await response.json();
         responseMessage.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;

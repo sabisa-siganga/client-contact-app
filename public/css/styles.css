@@ -1,0 +1,47 @@
+body {
+    background-color: #f3f3f3 !important;
+}
+
+.navbar.navbar-custom {
+    background-color: #3ea36b;
+    margin-bottom: 30px;
+}
+
+.navbar .navbar-brand {
+    color: #fff;
+}
+
+.navbar .nav-link {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.client-form-container {
+    padding-bottom: 50px;
+}
+
+.tab-pane {
+    padding: 34px 35px 40px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0.375rem;
+    border-top-left-radius: 0;
+}
+
+.tabs-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-container {
+    max-width: 520px;
+}
+
+.no-records {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 163px;
+}

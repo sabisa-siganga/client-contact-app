@@ -50,7 +50,7 @@ const Contact: ModelDefined<ContactAttributes, ContactCreationAttributes> =
       },
     },
     {
-      tableName: "clients",
+      tableName: "contacts",
       timestamps: false,
       indexes: [
         {
@@ -67,4 +67,4 @@ Client.hasMany(Contact, {
 
 Contact.belongsTo(Client, { foreignKey: "clientId", as: "client" });
 
-export default Client;
+export default Contact;

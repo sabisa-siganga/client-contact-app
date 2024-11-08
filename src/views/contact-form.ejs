@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Contact</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <%- include('partials/nav') %>
+
+    <div class="container client-form-container">
+      <h2 class="text-center mb-5">Contact Form</h2>
+
+      <div class="tabs-container">
+        <!-- Response message -->
+        <%- include('partials/alert') %>
+
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-tabs" id="contactTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link <%- showTab === 'general' ? 'active' : '' %>"
+              id="general-tab"
+              data-bs-toggle="tab"
+              href="#general"
+              role="tab"
+              aria-controls="general"
+              aria-selected="true"
+              >General</a
+            >
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link <%- showTab === 'clients' ? 'active' : '' %>"
+              id="clients-tab"
+              data-bs-toggle="tab"
+              href="#clients"
+              role="tab"
+              aria-controls="clients"
+              aria-selected="false"
+              >Clients</a
+            >
+          </li>
+        </ul>
+
+        <!-- Tabs Content -->
+        <div class="tab-content" id="contactTabContent">
+          <!-- General Tab -->
+          <div
+            class="tab-pane fade <%- showTab === 'general' ? 'show active' : '' %>"
+            id="general"
+            role="tabpanel"
+            aria-labelledby="general-tab"
+          >
+            <div class="form-container">
+              <div class="h5 mb-3">Add new contact</div>
+              <% if(!contactId){%>
+              <div class="my-3">To link clients, first create a contact</div>
+              <%}%>
+              <form id="addContactForm">
+                <div class="mb-3 text-start">
+                  <label for="name" class="form-label">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    required
+                    value="<%- contactDetails.name %>"
+                    placeholder="Enter name"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="surname" class="form-label">Surname</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="surname"
+                    name="surname"
+                    required
+                    value="<%- contactDetails.surname %>"
+                    placeholder="Enter surname"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    required
+                    value="<%- contactDetails.email %>"
+                    placeholder="Enter email"
+                  />
+                </div>
+
+                <div class="text-end">
+                  <button type="submit" class="btn btn-submit btn-primary">
+                    Save Contact
+                  </button>
+                </div>
+              </form>
+
+              <% if(contactId) {%>
+              <!-- Multi-select dropdown for linking new clients -->
+              <h4 id="link-client">Link New Clients</h4>
+              <input type="hidden" value="<%= contactId %>" id="hidden-input" />
+              <select
+                class="form-select"
+                name="clientIds"
+                id="clientSelect"
+                multiple
+              >
+                <% availableClients.forEach(client => { %>
+                <option value="<%= client.id %>">
+                  <%= client.name %> - <%= client.clientCode %>
+                </option>
+                <% }); %>
+              </select>
+              <button
+                type="button"
+                class="btn btn-primary mt-2"
+                id="link-clients"
+              >
+                Link Selected Clients
+              </button>
+
+              <%}%>
+            </div>
+          </div>
+
+          <!-- Clients Tab -->
+
+          <div
+            class="tab-pane fade <%- showTab === 'clients' ? 'show active' : '' %>"
+            id="clients"
+            role="tabpanel"
+            aria-labelledby="clients-tab"
+          >
+            <% if(clients.length === 0){%>
+            <div class="no-records">No client(s) found</div>
+            <% } else { %>
+            <div>
+              <div class="h5">Client List</div>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Client Name</th>
+                    <th>Client Code</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% clients.forEach(client => { %>
+                  <tr>
+                    <td class="text-start"><%= client.name %></td>
+                    <td class="text-start"><%= client.clientCode %></td>
+                    <td class="text-center">
+                      <a
+                        href="/unlink-client/<%= contactId %>/<%= client.id %>"
+                        class="btn btn-sm btn-danger"
+                        >Unlink Client</a
+                      >
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="/js/script.js"></script>
+  </body>
+</html>

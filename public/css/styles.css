@@ -1,26 +1,32 @@
+/* Global background color for the body */
 body {
     background-color: #f3f3f3 !important;
 }
 
+/* Custom styling for the navigation bar */
 .navbar.navbar-custom {
     background-color: #3ea36b;
     margin-bottom: 30px;
 }
 
+/* Styling for the brand/logo text in the navbar */
 .navbar .navbar-brand {
     color: #fff;
 }
 
+/* Styling for navigation links in the navbar */
 .navbar .nav-link {
     color: #fff;
     font-size: 16px;
     font-weight: 400;
 }
 
+/*Styling for container for client form pages */
 .client-form-container {
     padding-bottom: 50px;
 }
 
+/* Styling for each tab pane content */
 .tab-pane {
     padding: 34px 35px 40px;
     background-color: #fff;
@@ -30,15 +36,19 @@ body {
     border-top-left-radius: 0;
 }
 
+/* Styling fo rthe tabs-container */
 .tabs-container {
     max-width: 800px;
     margin: 0 auto;
 }
 
+
+/* Form container styling */
 .form-container {
     max-width: 520px;
 }
 
+/* Styling for 'no records' message display */
 .no-records {
     display: flex;
     justify-content: center;

@@ -118,35 +118,45 @@ async function addContact() {
   });
 }
 
+// Function to link selected contacts to a client
 async function linkContactsToClient() {
+  // Retrieve the list of selected contacts from the "contactSelect" multi-select element
   const selectedContacts = Array.from(
     document.getElementById("contactSelect").selectedOptions
-  ).map((option) => option.value);
+  ).map((option) => option.value); // Map each selected option to its value (contact ID)
+
+  // Get the client ID from a hidden input field in the form
   const clientId = document.getElementById("hidden-input").value;
 
+  // Validation: Ensure at least one contact is selected and a client ID is available
   if (!selectedContacts.length || !clientId) {
     alert("Please select at least one contact to link.");
-    return;
+    return; // Exit the function if validation fails
   }
 
   try {
+    // Send the selected contacts and client ID to the server for linking
     const response = await fetch(`/link-contacts/${clientId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ contactIds: selectedContacts }),
+      body: JSON.stringify({ contactIds: selectedContacts }), // Send contact IDs in the request body
     });
 
+    // Check if the response is successful
     if (response.ok) {
+      // Redirect to the client's page with "contacts" tab displayed after successful linking
       location.href = `./${clientId}?show=contacts`;
     } else {
+      // Display an error message if the server responds with an error
       const error = await response.json();
       document.getElementById(
         "responseMessage"
       ).innerHTML = `<div class="alert alert-danger">${error.message}</div>`;
     }
   } catch (error) {
+    // Log the error and display a user-friendly error message in case of failure
     console.error("Error linking contacts:", error);
     document.getElementById(
       "responseMessage"
@@ -154,35 +164,45 @@ async function linkContactsToClient() {
   }
 }
 
+// Function to link selected clients to a contact
 async function linkClientsToContact() {
+  // Retrieve the list of selected clients from the "clientSelect" multi-select element
   const selectedClients = Array.from(
     document.getElementById("clientSelect").selectedOptions
-  ).map((option) => option.value);
+  ).map((option) => option.value); // Map each selected option to its value (client ID)
+
+  // Get the contact ID from a hidden input field in the form
   const contactId = document.getElementById("hidden-input").value;
 
+  // Validation: Ensure at least one client is selected and a contact ID is available
   if (!selectedClients.length || !contactId) {
     alert("Please select at least one client to link.");
-    return;
+    return; // Exit the function if validation fails
   }
 
   try {
+    // Send the selected clients and contact ID to the server for linking
     const response = await fetch(`/link-clients/${contactId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ clientIds: selectedClients }),
+      body: JSON.stringify({ clientIds: selectedClients }), // Send client IDs in the request body
     });
 
+    // Check if the response is successful
     if (response.ok) {
+      // Redirect to the contact's page with "clients" tab displayed after successful linking
       location.href = `./${contactId}?show=clients`;
     } else {
+      // Display an error message if the server responds with an error
       const error = await response.json();
       document.getElementById(
         "responseMessage"
       ).innerHTML = `<div class="alert alert-danger">${error.message}</div>`;
     }
   } catch (error) {
+    // Log the error and display a user-friendly error message in case of failure
     console.error("Error linking clients:", error);
     document.getElementById(
       "responseMessage"
@@ -190,16 +210,19 @@ async function linkClientsToContact() {
   }
 }
 
-// Initialize event listeners for the addClient and addContact forms once the document is fully loaded
+// Initialize event listeners once the document is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
+  // Initialize form functions to add clients and contacts
   addClient();
   addContact();
 
+  // Add click event listener to the "link contacts" button if it exists
   const linkContactBtn = document.getElementById("link-contacts");
   if (linkContactBtn) {
     linkContactBtn.addEventListener("click", linkContactsToClient);
   }
 
+  // Add click event listener to the "link clients" button if it exists
   const linkClientBtn = document.getElementById("link-clients");
   if (linkClientBtn) {
     linkClientBtn.addEventListener("click", linkClientsToContact);

@@ -11,12 +11,35 @@ export const clientListPage = async (req: Request, res: Response) => {
     // Fetch all clients from the database, ordered alphabetically by the client's name
     const clients = await Client.findAll({
       order: [["name", "ASC"]],
+      include: [
+        {
+          model: Contact, // Include associated contacts for each client
+          as: "contacts", // Alias for accessing associated contacts
+          through: { attributes: [] }, // Exclude junction table attributes
+        },
+      ],
     });
-    console.log(clients); // Log the clients list for debugging
+
+    // Create a simplified list of clients with relevant details and the count of linked contacts
+    const clientList = clients.map((client) => ({
+      // Extract the client's ID from the Sequelize instance
+      id: client.getDataValue("id"),
+
+      // Extract the client's name
+      name: client.getDataValue("name"),
+
+      // Extract the client's unique code
+      clientCode: client.getDataValue("clientCode"),
+
+      // Count the number of linked contacts by getting the length of the contacts array
+      linkedContacts: client.getDataValue("contacts").length,
+    }));
+
+    console.log(clientList);
 
     // Render the client list view, passing the fetched clients to the template
     res.render("client-list", {
-      clients,
+      clients: clientList,
     });
   } catch (error) {
     console.error(error); // Log any errors that occur
@@ -35,8 +58,10 @@ export const clientFormPage = async (req: Request, res: Response) => {
   try {
     const { clientId } = req.params; // Get clientId from request parameters
     let clientDetails = { name: "", clientCode: "" }; // Default client details for a new client
+    // // Extract show from the request parameters
     const { show } = req.query;
 
+    // Check the show query parameter to decide which tab should be active (contacts or general).
     const showTab = show === "contacts" ? "contacts" : "general";
 
     // If no clientId is provided, create new client
@@ -150,44 +175,56 @@ export const addClient = async (req: Request, res: Response) => {
   }
 };
 
+// Controller function to link multiple contacts to a client
 export const linkContacts = async (req: Request, res: Response) => {
   try {
+    // Extract clientId from the URL parameters and contactIds from the request body
     const { clientId } = req.params;
-    const { contactIds } = req.body; // Array of contact IDs
+    const { contactIds } = req.body; // Array of contact IDs to be linked
 
+    // Check if contactIds are provided in the request
     if (!contactIds || !contactIds.length) {
       res.status(400).json({ message: "No contacts selected" });
-      return;
+      return; // Exit early if no contacts were selected
     }
 
+    // Check if clientId is present in the request
     if (!clientId) {
       res.status(400).json({ message: "Client ID is required" });
-      return;
+      return; // Exit early if clientId is missing
     }
 
     // Link each selected contact to the client
     const links = contactIds.map((contactId: number) => ({
-      clientId: clientId,
-      contactId: contactId,
+      clientId: clientId, // The client to link
+      contactId: contactId, // The contact to link
     }));
 
     // Use bulkCreate to add multiple records in ClientContacts
+    // ignoreDuplicates: true ensures that no duplicate records are created
     await ClientContact.bulkCreate(links, { ignoreDuplicates: true });
 
+    // Respond with a success message if linking was successful
     res.status(201).json({ message: "Contacts linked successfully" });
   } catch (error) {
+    // Log the error for debugging
     console.error("Error linking contacts:", error);
+
+    // Respond with a generic error message if something went wrong
     res.status(500).json({ message: "Error linking contacts" });
   }
 };
 
+// Controller function to unlink a specific contact from a client
 export const unlinkContact = async (req: Request, res: Response) => {
   try {
+    // Extract clientId and contactId from the URL parameters
     const { clientId, contactId } = req.params as {
       contactId: string;
       clientId: string;
     };
 
+    // Delete the link between the specified client and contact from the ClientContact table
     await ClientContact.destroy({
       where: {
         clientId,
@@ -195,10 +232,13 @@ export const unlinkContact = async (req: Request, res: Response) => {
       },
     });
 
+    // Redirect back to the client form page with a URL anchor to highlight the "link contact" section
     res.redirect(`/client-form/${clientId}#link-contact`);
   } catch (error) {
+    // Log the error for debugging
     console.error(error);
 
+    // Send a response with a generic error message if something went wrong
     res.send("Error while unlinking a contact");
   }
 };

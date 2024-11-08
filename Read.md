@@ -22,8 +22,9 @@ A web application built with JavaScript (Node.js) for managing clients and their
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/client-management-system.git
-   cd client-management-system
+   git clone https://github.com/sabisa-siganga/client-contact-app.git
+
+   cd client-contact-app
 
    ```
 
@@ -36,8 +37,8 @@ A web application built with JavaScript (Node.js) for managing clients and their
 PORT=4000
 DATABASE_URL=your_database_url
 
-4. **Run database migrations**
-   npx sequelize-cli db:migrate
+4. **database dump**
+   Database is under the db export folder
 
 5. **Start the server**
    npm start

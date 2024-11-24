@@ -38,8 +38,7 @@ function incrementAlphaPadding(alphaPart: string) {
 /**
  * Generates a unique client code based on the client's name.
  * The format is a 3-letter alphabetical code derived from the client name,
- * followed by a 3-digit numeric code. The function ensures uniqueness by checking
- * the database and increments the alphabetical part if needed.
+ * followed by a 3-digit numeric code. The function ensures uniqueness by checking the database and increments the alphabetical part if needed.
  * @param clientName - The client's name used to generate the initial alphabetical part.
  * @returns {Promise<string>} - Returns a unique client code.
  */

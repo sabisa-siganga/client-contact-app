@@ -5,6 +5,8 @@ import contactRoute from "./contact"; // Import contact-related routes
 // Initialize the main router to group all routes
 export const routes = Router();
 
+// separate these two routes because when the app becomes big it will be easy to maintain
+
 // Use client-related routes under the main router
 // This will include all routes defined in `clientRoute`, e.g., /clients, /add-client
 routes.use(clientRoute);

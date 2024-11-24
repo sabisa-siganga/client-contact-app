@@ -113,6 +113,15 @@
               <!-- Multi-select dropdown for linking new clients -->
               <h4 id="link-client">Link New Clients</h4>
               <input type="hidden" value="<%= contactId %>" id="hidden-input" />
+
+              <!-- Search Input -->
+              <input
+                type="text"
+                class="form-control mb-2"
+                id="searchClientInput"
+                placeholder="Search for clients..."
+                oninput="filterClientList()"
+              />
               <select
                 class="form-select"
                 name="clientIds"
@@ -125,6 +134,16 @@
                 </option>
                 <% }); %>
               </select>
+
+              <!-- No Clients Found Message -->
+              <div
+                id="noClientsMessage"
+                class="mt-2 text-danger"
+                style="display: none"
+              >
+                No matching clients found.
+              </div>
+
               <button
                 type="button"
                 class="btn btn-primary mt-2"

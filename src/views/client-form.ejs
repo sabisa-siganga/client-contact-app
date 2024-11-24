@@ -109,10 +109,20 @@
               <!-- Multi-select dropdown for linking new contacts -->
               <h4 id="link-contact">Link New Contacts</h4>
               <input type="hidden" value="<%= clientId %>" id="hidden-input" />
+
+              <!-- Search Input -->
+              <input
+                type="text"
+                class="form-control mb-2"
+                id="searchClientInput"
+                placeholder="Search for contacts..."
+                oninput="filterClientList()"
+              />
+
               <select
                 class="form-select"
                 name="contactIds"
-                id="contactSelect"
+                id="clientSelect"
                 multiple
               >
                 <% availableContacts.forEach(contact => { %>
@@ -122,6 +132,16 @@
                 </option>
                 <% }); %>
               </select>
+
+              <!-- No Clients Found Message -->
+              <div
+                id="noClientsMessage"
+                class="mt-2 text-danger"
+                style="display: none"
+              >
+                No matching clients found.
+              </div>
+
               <button
                 type="button"
                 class="btn btn-primary mt-2"

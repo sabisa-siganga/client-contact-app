@@ -8,7 +8,7 @@ import ClientContact from "../models/client-contact.model";
 // Controller function to render a page displaying the list of all clients
 export const clientListPage = async (req: Request, res: Response) => {
   try {
-    // Fetch all clients from the database, ordered alphabetically by the client's name
+    // Fetch all clients from the database, ordered alphabetically by the client's name with the linked contacts to each client
     const clients = await Client.findAll({
       order: [["name", "ASC"]],
       include: [
@@ -87,7 +87,7 @@ export const clientFormPage = async (req: Request, res: Response) => {
       ],
     });
 
-    // If client not found, render the form with empty client details and no contacts
+    // If client not found, create a new client and no contacts
     if (!client) {
       res.render("client-form", {
         clientDetails,
@@ -175,7 +175,7 @@ export const addClient = async (req: Request, res: Response) => {
   }
 };
 
-// Controller function to link multiple contacts to a client
+// Controller function to link multiple contacts to a client using ids
 export const linkContacts = async (req: Request, res: Response) => {
   try {
     // Extract clientId from the URL parameters and contactIds from the request body

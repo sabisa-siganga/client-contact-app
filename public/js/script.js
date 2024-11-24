@@ -228,3 +228,33 @@ document.addEventListener("DOMContentLoaded", function () {
     linkClientBtn.addEventListener("click", linkClientsToContact);
   }
 });
+
+function filterClientList() {
+  // Get the search query
+  const searchInput = document
+    .getElementById("searchClientInput")
+    .value.toLowerCase();
+  const clientSelect = document.getElementById("clientSelect");
+  const options = clientSelect.options;
+  const noClientsMessage = document.getElementById("noClientsMessage");
+
+  let hasVisibleOptions = false; // Track if any options are visible
+
+  // Loop through all the options and show/hide based on the search query
+  for (let i = 0; i < options.length; i++) {
+    const optionText = options[i].textContent.toLowerCase();
+    if (optionText.includes(searchInput)) {
+      options[i].style.display = ""; // Show option
+      hasVisibleOptions = true; // At least one option is visible
+    } else {
+      options[i].style.display = "none"; // Hide option
+    }
+  }
+
+  // Show or hide the "No clients found" message based on visible options
+  if (hasVisibleOptions) {
+    noClientsMessage.style.display = "none"; // Hide the message
+  } else {
+    noClientsMessage.style.display = "block"; // Show the message
+  }
+}

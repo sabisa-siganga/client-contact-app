@@ -7,7 +7,7 @@ import ClientContact from "../models/client-contact.model";
 // Controller function to render a page displaying the list of all contacts
 export const contactListPage = async (req: Request, res: Response) => {
   try {
-    // Fetch all contacts from the database, ordered by surname and then by name alphabetically
+    // Fetch all contacts from the database, ordered by surname and then by name alphabetically and all the linked clients for each contact
     const contacts = await Contact.findAll({
       order: [
         ["surname", "ASC"], // Sort by surname in ascending order
@@ -135,7 +135,7 @@ export const contactFormPage = async (req: Request, res: Response) => {
   }
 };
 
-// Controller function to create a new contact in the database
+// Controller function to create a new contact in the database for the create contact endpoint called from the frontend using ajax
 export const createContact = async (req: Request, res: Response) => {
   try {
     const { name, surname, email } = req.body; // Extract name, surname, and email from the request body

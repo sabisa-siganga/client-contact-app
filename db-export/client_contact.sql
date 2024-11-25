@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2024 at 05:21 PM
+-- Generation Time: Nov 25, 2024 at 01:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,7 +45,19 @@ INSERT INTO `clients` (`id`, `client_code`, `name`, `created_at`) VALUES
 (5, 'SSA002', 'Sabisa Siganga', '2024-11-06 17:44:03'),
 (6, 'TES001', 'Test', '2024-11-06 17:44:03'),
 (7, 'T2A001', 'Test 2', '2024-11-06 17:44:03'),
-(8, 'LOU001', 'Lou', '2024-11-08 13:49:23');
+(8, 'LOU001', 'Lou', '2024-11-08 13:49:23'),
+(9, 'SAB001', 'Sabisa', '2024-11-15 06:52:38'),
+(10, 'SAB002', 'Sabisa', '2024-11-15 07:04:23'),
+(11, 'SAB003', 'Sabisa', '2024-11-15 07:04:23'),
+(12, 'FNB001', 'First National Bank', '2024-11-15 07:04:23'),
+(13, 'FNB002', 'First National Beer', '2024-11-15 07:04:23'),
+(14, 'FNA001', 'First National', '2024-11-15 07:04:23'),
+(15, 'FIR001', 'First', '2024-11-15 07:04:23'),
+(16, '@HO001', '@home', '2024-11-15 07:04:23'),
+(17, '@HO002', '@home', '2024-11-15 07:04:23'),
+(18, 'HOM001', 'home', '2024-11-15 07:04:23'),
+(19, 'FNB003', 'First National Bank', '2024-11-15 07:04:23'),
+(20, 'SSA003', 'Sabisa Siganga', '2024-11-15 07:04:23');
 
 -- --------------------------------------------------------
 
@@ -66,11 +78,21 @@ INSERT INTO `client_contacts` (`client_id`, `contact_id`) VALUES
 (1, 1),
 (3, 1),
 (4, 1),
-(4, 3),
+(4, 2),
 (5, 1),
 (5, 4),
 (6, 1),
-(7, 1);
+(7, 1),
+(9, 2),
+(9, 4),
+(10, 1),
+(12, 8),
+(15, 1),
+(15, 2),
+(15, 3),
+(15, 4),
+(15, 6),
+(15, 8);
 
 -- --------------------------------------------------------
 
@@ -94,7 +116,9 @@ INSERT INTO `contacts` (`id`, `name`, `surname`, `email`, `created_at`) VALUES
 (1, 'Sabisa', 'Siganga', 'lumisabisa@gmail.com', '2024-11-07 23:02:46'),
 (2, 'Executive', 'School', 'asandisabhebheza40@gmail.com', '2024-11-08 16:00:00'),
 (3, 'New', 'Name', 'lkl@mga.com', '2024-11-08 16:05:10'),
-(4, 'New 2', 'test', 'd@gm.com', '2024-11-08 16:05:10');
+(4, 'New 2', 'test', 'd@gm.com', '2024-11-08 16:05:10'),
+(6, 'Sabisa', 'Siganga', 'lumisabisa@gmail.com1', '2024-11-15 07:04:24'),
+(8, 'Tracey', 'Blue', 'blue@gmail.com', '2024-11-15 07:04:24');
 
 --
 -- Indexes for dumped tables
@@ -127,13 +151,13 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
